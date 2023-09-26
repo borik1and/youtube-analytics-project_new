@@ -6,4 +6,6 @@ def test_get_video_info():
     assert str(video1) == 'GIL в Python: зачем он нужен и как с этим жить'
 
 
-
+def test_plvideo():
+    video2 = PLVideo('4fObz_qw9u4', 'PLv_zOGKKxVph_8g2Mqc3LMhj0M_BfasbC')
+    assert str(video2) == 'MoscowPython Meetup 78 - вступление'
