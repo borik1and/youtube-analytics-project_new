@@ -17,6 +17,9 @@ class Channel:
         self.total_views = None
         self.__api_key = os.getenv('YT_API_KEY')
         self.get_channel_info()
+        # self.video_title = None
+        # self.channel_title = None
+        # self.video_description = None
 
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
 
@@ -53,6 +56,7 @@ class Channel:
     def get_channel_info(self):
         youtube = self.get_service()
         channel_data = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        # проверка существования канала
         if 'items' in channel_data:
             channel_data = channel_data['items'][0]
             self.title = channel_data['snippet']['title']
@@ -61,6 +65,7 @@ class Channel:
             self.num_subscribers = int(channel_data['statistics']['subscriberCount'])
             self.video_count = int(channel_data['statistics']['videoCount'])
             self.total_views = int(channel_data['statistics']['viewCount'])
+        print('Канал не найден!')
 
     def to_json(self, filename):
         # сохраняет в файл '*.json' значения атрибутов экземпляра Channel
