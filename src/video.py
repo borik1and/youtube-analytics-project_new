@@ -28,11 +28,11 @@ class Video(Channel):
         # Return the video title
         return self.title
 
-    class PLVideo(Video):
-        def __init__(self, channel_id, id_video):
-            super().__init__(channel_id)
-            self.id_video = id_video
+class PLVideo(Video):
+    def __init__(self, channel_id, id_video):
+        super().__init__(channel_id)
+        self.id_video = id_video
 
-        def __str__(self):
-            # возвращает имя видео
-            return self.title
+    def __str__(self):
+        # возвращает имя видео
+        return self.title
