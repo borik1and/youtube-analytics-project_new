@@ -33,7 +33,3 @@ class PLVideo(Video):
     def __init__(self, channel_id, id_video):
         super().__init__(channel_id)
         self.id_video = id_video
-
-    # def __str__(self):
-    #     # возвращает название видео и канала
-    #     return self.title
