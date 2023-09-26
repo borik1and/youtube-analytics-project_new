@@ -22,7 +22,7 @@ class Video(Channel):
             self.channel_title = video['snippet']['channelTitle']  # Store channel title
             self.description = video['snippet']['description']  # Store description
         else:
-            print("Video not found.")
+            print("Видео не найдено!")
 
     def __str__(self):
         # Return the video title
