@@ -1,6 +1,7 @@
 from src.channel import Channel
 
-def test_Channel():
+
+def test_channel():
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
     assert moscowpython.title == 'MoscowPython'
     # assert moscowpython.video_count == 707
@@ -27,7 +28,6 @@ def test_sub():
     combined_channel = moscowpython - highload
     expected_subscribers = -1427
     assert combined_channel == expected_subscribers
-
 
 
 def test_lt():
