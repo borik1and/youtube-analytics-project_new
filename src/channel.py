@@ -53,6 +53,7 @@ class Channel:
     def get_channel_info(self):
         youtube = self.get_service()
         channel_data = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+
         if 'items' in channel_data:
             channel_data = channel_data['items'][0]
             self.title = channel_data['snippet']['title']
