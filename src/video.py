@@ -22,17 +22,18 @@ class Video(Channel):
             self.channel_title = video['snippet']['channelTitle']  # Store channel title
             self.description = video['snippet']['description']  # Store description
         else:
-            print("Видео не найдено!")
+            print("Видео не найдено!plvideo")
 
     def __str__(self):
-        # Return the video title
+        # возвращает название видео
         return self.title
+
 
 class PLVideo(Video):
     def __init__(self, channel_id, id_video):
         super().__init__(channel_id)
         self.id_video = id_video
 
-    def __str__(self):
-        # возвращает имя видео
-        return self.title
+    # def __str__(self):
+    #     # возвращает название видео и канала
+    #     return self.title
