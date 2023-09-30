@@ -1,6 +1,10 @@
-import isodate
 import datetime
+
+import isodate
+
 from src.channel import Channel
+
+youtube = Channel.get_service()
 
 
 class PlayList(Channel):
@@ -15,7 +19,7 @@ class PlayList(Channel):
         return self.formatted_duration
 
     def get_playlist_info(self):
-        youtube = Channel.get_service()
+        # youtube = Channel.get_service()
         playlist_data = youtube.playlists().list(id=self.playlist_id, part='snippet').execute()
 
         if 'items' in playlist_data and playlist_data['items']:
@@ -27,7 +31,7 @@ class PlayList(Channel):
 
     @property
     def total_duration(self):
-        youtube = Channel.get_service()
+        # youtube = Channel.get_service()
         playlist_items = youtube.playlistItems().list(
             part='contentDetails',
             playlistId=self.playlist_id,
@@ -54,4 +58,29 @@ class PlayList(Channel):
 
     def show_best_video(self):
         # возвращает ссылку на самое популярное видео из плейлиста (по количеству лайков)
-        pass
+        playlist_response = youtube.playlistItems().list(
+            part='snippet',
+            playlistId=self.playlist_id,
+            maxResults=50  # You may need to paginate through the results if there are more than 50 videos.
+        ).execute()
+
+        most_popular_video = None
+        max_likes = 0
+
+        for item in playlist_response.get('items', []):
+            video_id = item['snippet']['resourceId']['videoId']
+            video_response = youtube.videos().list(
+                part='statistics',
+                id=video_id
+            ).execute()
+
+            if 'items' in video_response:
+                like_count = int(video_response['items'][0]['statistics']['likeCount'])
+                if like_count > max_likes:
+                    max_likes = like_count
+                    most_popular_video = video_id
+
+        if most_popular_video:
+            return f"https://youtu.be/{most_popular_video}"
+        else:
+            return "No videos found in the playlist or no likes data available."
