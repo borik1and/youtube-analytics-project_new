@@ -19,9 +19,8 @@ class PlayList(Channel):
         return self.formatted_duration
 
     def get_playlist_info(self):
-        # youtube = Channel.get_service()
         playlist_data = youtube.playlists().list(id=self.playlist_id, part='snippet').execute()
-
+        # получаем информацию о плайлистк
         if 'items' in playlist_data and playlist_data['items']:
             playlist_data = playlist_data['items'][0]['snippet']
             self.title = playlist_data['title']
@@ -31,7 +30,6 @@ class PlayList(Channel):
 
     @property
     def total_duration(self):
-        # youtube = Channel.get_service()
         playlist_items = youtube.playlistItems().list(
             part='contentDetails',
             playlistId=self.playlist_id,
