@@ -8,21 +8,30 @@ class Video(Channel):
         self.title = None
         self.channel_title = None
         self.description = None
+        self.like_count = None
         self.get_video_info()
 
     def get_video_info(self):
         # открытие видео по id
         youtube = Channel.get_service()
-        video_data = youtube.videos().list(part='snippet', id=self.video_id).execute()
+        try:
+            video_data = youtube.videos().list(part='snippet', id=self.video_id).execute()
 
-        # проверка существования видео
-        if 'items' in video_data:
-            video = video_data['items'][0]
-            self.title = video['snippet']['title']  # Store video title
-            self.channel_title = video['snippet']['channelTitle']  # Store channel title
-            self.description = video['snippet']['description']  # Store description
-        else:
-            print("Видео не найдено!plvideo")
+            # проверка существования видео
+            if 'items' in video_data:
+                video = video_data['items'][0]
+                self.title = video['snippet']['title']  # Store video title
+                self.channel_title = video['snippet']['channelTitle']  # Store channel title
+                self.description = video['snippet']['description']  # Store description
+            else:
+                print("Видео не найдено!plvideo")
+
+        except IndexError as e:
+            self.title = None
+            self.channel_title = None
+            self.description = None
+            self.like_count = None
+            print(f'Видео по ID: {self.video_id} не найдено')
 
     def __str__(self):
         # возвращает название видео
